@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shopping Cart</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+        form {
+      width: 300px;
+      margin: 0 auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    h2,h1{
+        text-align: center;
+    }
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+    <h2>Add Item</h2>
+  <form action="/addItem" method="post">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required><br>
+
+    <label for="price">Price:</label>
+    <input type="number" id="price" name="price" required><br>
+    
+    <button class="button" type="submit">Add Item</button>
+  </form>
+  <h1>Shopping Cart</h1>
+  
+  <table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Action</th>
+    </tr>
+    <% let sum = 0; %>
+    <% shoppingCart.forEach((item) => { %>
+        <% sum += item.price; %>
+        <tr>
+            <td><%= item.name %></td>
+            <td><%= item.price %></td>
+            <td><form action="/removeItem" method="post" style="display: inline;"><input type="hidden" name="id" value="<%= item.id %>"><button class="button" type="submit">Remove from cart</button></form></td>
+        </tr>  
+    <% }) %>
+    <tr>
+        <td><b>Total Price</b></td>
+        <td colspan="2"><%= sum %></td>
+    </tr>
+</table>
+</body>
+</html>
